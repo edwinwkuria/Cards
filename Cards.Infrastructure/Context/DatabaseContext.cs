@@ -15,6 +15,7 @@ public class DatabaseContext : DbContext, IEntitiesContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        EntityConfiguration.EntitiesBuilder(builder);
         base.OnModelCreating(builder);
     }
     

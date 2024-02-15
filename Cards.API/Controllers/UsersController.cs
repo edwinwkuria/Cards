@@ -18,19 +18,22 @@ public class UsersController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<string>> GetUsers()
     {
-        return Ok();
+        var users = _userService.GetAllUsers();
+        return Ok(users);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<string> GetUser(int id)
+    public ActionResult<string> GetUser(Guid id)
     {
-        return Ok();
+        var user = _userService.GetUserById(id);
+        return Ok(user);
     }
 
     [HttpPost("login")]
     public ActionResult Login([FromBody] LoginBindingModel card)
     {
-        return Ok();
+        var login = _userService.LoginUser();
+        return Ok(login);
     }
 }
 

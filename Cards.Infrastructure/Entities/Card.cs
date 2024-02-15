@@ -2,7 +2,7 @@
 
 namespace Cards.Infrastructure.Entities;
 
-public class Card
+public class Card : BaseModel
 {
     public string Name { get; set; }
     public string Description { get; set; }
