@@ -24,6 +24,7 @@ public static class ServiceInjectionExtension
         //Locally injected services
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ICardService, CardService>();
+        services.AddScoped<IJwtHelper, JwtService>();
         return services;
     }
 }

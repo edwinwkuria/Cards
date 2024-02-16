@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.Common;
+using Cards.Infrastructure.Seeder;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cards.Infrastructure.Context;
@@ -17,6 +18,8 @@ public class DatabaseContext : DbContext, IEntitiesContext
     {
         EntityConfiguration.EntitiesBuilder(builder);
         base.OnModelCreating(builder);
+
+        UserSeeder.SeedUsers(builder);
     }
     
     public new DbSet<TEntity> Set<TEntity>() where TEntity : class

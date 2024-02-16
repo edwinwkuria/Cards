@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cards.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240215082113_InitialMigration")]
+    [Migration("20240216053739_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -145,12 +145,6 @@ namespace Cards.Infrastructure.Migrations
                         .HasColumnType("character varying(500)")
                         .HasColumnName("password");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("character varying(25)")
-                        .HasColumnName("phoneNumber");
-
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("text");
@@ -158,6 +152,53 @@ namespace Cards.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("40d985e0-44a5-4cd7-aaec-d59059691f2b"),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "john.doe@gmail.com",
+                            FirstName = "John",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LastName = "Doe",
+                            Password = "Password",
+                            Role = "Member"
+                        },
+                        new
+                        {
+                            Id = new Guid("f5174e11-8ada-454b-8552-30e9a97c16aa"),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "jane.doe@gmail.com",
+                            FirstName = "Jane",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LastName = "Doe",
+                            Password = "Password",
+                            Role = "Member"
+                        },
+                        new
+                        {
+                            Id = new Guid("fee659f7-9f52-417f-95d1-21054fe33eec"),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "jane.doe@gmail.com",
+                            FirstName = "Michael",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LastName = "Brown",
+                            Password = "Password",
+                            Role = "Admin"
+                        });
                 });
 #pragma warning restore 612, 618
         }

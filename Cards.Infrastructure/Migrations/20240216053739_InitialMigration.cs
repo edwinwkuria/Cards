@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Cards.Infrastructure.Migrations
 {
     /// <inheritdoc />
@@ -40,7 +42,6 @@ namespace Cards.Infrastructure.Migrations
                     firstname = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     lastname = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    phoneNumber = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false),
                     password = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     Role = table.Column<string>(type: "text", nullable: false),
                     created_on = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -53,6 +54,16 @@ namespace Cards.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_users", x => x.id);
+                });
+
+            migrationBuilder.InsertData(
+                table: "users",
+                columns: new[] { "id", "created_by", "created_on", "deleted_by", "deleted_on", "email", "firstname", "is_active", "is_deleted", "lastname", "password", "Role" },
+                values: new object[,]
+                {
+                    { new Guid("40d985e0-44a5-4cd7-aaec-d59059691f2b"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "john.doe@gmail.com", "John", true, false, "Doe", "Password", "Member" },
+                    { new Guid("f5174e11-8ada-454b-8552-30e9a97c16aa"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jane.doe@gmail.com", "Jane", true, false, "Doe", "Password", "Member" },
+                    { new Guid("fee659f7-9f52-417f-95d1-21054fe33eec"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jane.doe@gmail.com", "Michael", true, false, "Brown", "Password", "Admin" }
                 });
         }
 

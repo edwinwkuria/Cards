@@ -1,4 +1,5 @@
-﻿using Cards.Infrastructure.Entities;
+﻿using Cards.API.TokenHelper;
+using Cards.Infrastructure.Entities;
 using Cards.Infrastructure.Repository.Abstract;
 using Cards.Services.Interfaces;
 
@@ -8,11 +9,13 @@ public class UserService : IUserService
 {
     private readonly IUnitOfWork _iuow;
     private readonly IRepository<User> _repository;
+    private readonly IJwtHelper _jwtHelper;
 
-    public UserService(IUnitOfWork iuow)
+    public UserService(IUnitOfWork iuow, IJwtHelper jwtHelper)
     {
         _iuow = iuow;
         _repository = _iuow.Repository<User>();
+        _jwtHelper = jwtHelper;
     }
 
     public List<User> GetAllUsers()
@@ -27,8 +30,8 @@ public class UserService : IUserService
         return user;
     }
 
-    public string LoginUser()
+    public string LoginUser(User user)
     {
-        return "token";
+        return _jwtHelper.GenerateUserToken(user);
     }
 }

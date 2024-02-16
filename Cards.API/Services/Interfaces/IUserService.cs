@@ -6,5 +6,5 @@ public interface IUserService
 {
     List<User> GetAllUsers();
     User GetUserById(Guid id);
-    string LoginUser();
+    string LoginUser(User user);
 }

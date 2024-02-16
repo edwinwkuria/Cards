@@ -2,12 +2,14 @@
 using Cards.BindingModels.CardsController;
 using Cards.Infrastructure.Entities;
 using Cards.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cards.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
+[Authorize]
 public class CardsController : ControllerBase
 {
     private readonly ICardService _cardService;

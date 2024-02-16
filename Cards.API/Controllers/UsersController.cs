@@ -1,4 +1,6 @@
-﻿using Cards.BindingModels.UsersController;
+﻿using AutoMapper;
+using Cards.BindingModels.UsersController;
+using Cards.Infrastructure.Entities;
 using Cards.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +11,12 @@ namespace Cards.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
-
-    public UsersController(IUserService userService)
+    private readonly IMapper _mapper;
+    
+    public UsersController(IUserService userService, IMapper mapper)
     {
         _userService = userService;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -30,10 +34,11 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("login")]
-    public ActionResult Login([FromBody] LoginBindingModel card)
+    public ActionResult Login([FromBody] LoginBindingModel login)
     {
-        var login = _userService.LoginUser();
-        return Ok(login);
+        var user = _mapper.Map<User>(login);
+        var token = _userService.LoginUser(user);
+        return Ok(token);
     }
 }
 

@@ -7,7 +7,7 @@ namespace Cards.API.ServiceCollectionExtensions;
 
 public static class DatabaseExtension
 {
-    public static IServiceCollection ConfigureapplicationDatabase(this IServiceCollection services, WebApplicationBuilder builder)
+    public static IServiceCollection ConfigureApplicationDatabase(this IServiceCollection services, WebApplicationBuilder builder)
     {
         var db = builder.Configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<DatabaseContext>
