@@ -1,4 +1,5 @@
-using Cards.API.TokenHelper;
+using Cards.API.ConfigModels;
+using Cards.API.Middleware;
 using Cards.API.ServiceCollectionExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,9 @@ builder.Services.ConfigureApplicationDatabase(builder: builder);
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("Jwt"));
 var jwt = builder.Configuration.GetSection("Jwt").Get<JwtConfig>();
 builder.Services.ConfigureJwtToken(config: jwt);
+//Setup Permissions
+builder.Services.Configure<PermissionsConfig>(builder.Configuration.GetSection("Permissions"));
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -28,7 +32,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<UserMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -17,7 +17,7 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
         this.dbSet = context.Set<TEntity>();
     }
 
-    public IQueryable<TEntity> All => dbSet.AsQueryable();
+    public IQueryable<TEntity> All => dbSet.Where(entity => !entity.IsDeleted).AsQueryable();
 
     public Task BulkInsertAsync(List<TEntity> entities) => context.AddRangeAsync(entities);
 
@@ -28,7 +28,9 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
 
     public void Delete(TEntity entity)
     {
-        context.Remove(entity);
+        entity.IsDeleted = true;
+        entity.DeletedOn = DateTime.UtcNow;
+        context.Update(entity);
     }
 
     public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
@@ -49,7 +51,8 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
 
     public TEntity Get(object id)
     {
-        return dbSet.Find(id);
+        var entity = dbSet.Find(id);
+        return entity != null && !entity.IsDeleted ? entity : null;
     }
 
     public Task<TEntity> GetAsync(object id)
@@ -59,6 +62,7 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
 
     public TEntity Insert(TEntity entity)
     {
+        entity.CreatedOn = DateTime.UtcNow;
         return dbSet.Add(entity).Entity;
     }
 

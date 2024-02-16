@@ -1,13 +1,14 @@
 ﻿using Cards.Infrastructure.Entities;
+using Cards.Services.DTOModels;
 
 namespace Cards.Services.Interfaces;
 
 public interface ICardService
 {
-    List<Card> GetAllCards();
-    Card GetCardById(Guid id);
-    Card CreateCard(Card card);
-    Card UpdateCard(Card card);
+    List<CardDTO> GetAllCards();
+    CardDTO GetCardById(Guid id);
+    CardDTO CreateCard(Card card);
+    CardDTO UpdateCard(Card card);
     bool DeleteCard(Guid id);
 
 }

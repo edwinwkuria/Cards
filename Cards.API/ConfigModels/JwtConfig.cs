@@ -1,4 +1,4 @@
-﻿namespace Cards.API.TokenHelper;
+﻿namespace Cards.API.ConfigModels;
 
 public class JwtConfig
 {

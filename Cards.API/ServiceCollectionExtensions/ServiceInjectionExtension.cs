@@ -25,6 +25,7 @@ public static class ServiceInjectionExtension
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ICardService, CardService>();
         services.AddScoped<IJwtHelper, JwtService>();
+        services.AddScoped<IAuthService, AuthService>();
         return services;
     }
 }

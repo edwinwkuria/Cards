@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Cards.API.TokenHelper;
+using Cards.API.ConfigModels;
 using Cards.Infrastructure.Entities;
 using Cards.Services.Interfaces;
 using Microsoft.Extensions.Options;
@@ -25,7 +25,8 @@ public class JwtService : IJwtHelper
         {
             Subject = new System.Security.Claims.ClaimsIdentity(new[]
                 {
-                    new Claim("Id", user.Id.ToString())
+                    new Claim("Id", user.Id.ToString()),
+                    new Claim("Role", user.Role.ToString())
                 }
             ),
             Expires = DateTime.UtcNow.AddMinutes(30),

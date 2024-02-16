@@ -1,6 +1,8 @@
-﻿using Cards.API.TokenHelper;
+﻿using AutoMapper;
+using Cards.API.ConfigModels;
 using Cards.Infrastructure.Entities;
 using Cards.Infrastructure.Repository.Abstract;
+using Cards.Services.DTOModels;
 using Cards.Services.Interfaces;
 
 namespace Cards.Services;
@@ -10,24 +12,25 @@ public class UserService : IUserService
     private readonly IUnitOfWork _iuow;
     private readonly IRepository<User> _repository;
     private readonly IJwtHelper _jwtHelper;
-
-    public UserService(IUnitOfWork iuow, IJwtHelper jwtHelper)
+    private readonly IMapper _mapper;
+    public UserService(IUnitOfWork iuow, IJwtHelper jwtHelper, IMapper mapper)
     {
         _iuow = iuow;
         _repository = _iuow.Repository<User>();
         _jwtHelper = jwtHelper;
+        _mapper = mapper;
     }
 
-    public List<User> GetAllUsers()
+    public List<UserDTO> GetAllUsers()
     {
-        var users = _repository.All.ToList();
+        var users = _repository.All.Select(x => _mapper.Map<UserDTO>(x)).ToList();
         return users;
     }
 
-    public User GetUserById(Guid id)
+    public UserDTO GetUserById(Guid id)
     {
         var user = _repository.Get(id);
-        return user;
+        return _mapper.Map<UserDTO>(user);
     }
 
     public string LoginUser(User user)

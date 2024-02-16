@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Cards.API.TokenHelper;
+using Cards.API.ConfigModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 

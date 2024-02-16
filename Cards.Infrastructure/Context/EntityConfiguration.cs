@@ -16,6 +16,7 @@ internal class EntityConfiguration
             user.Property(u => u.FirstName).HasMaxLength(50).HasColumnName("firstname");
             user.Property(u => u.LastName).HasMaxLength(50).HasColumnName("lastname");
             user.Property(u => u.Email).HasMaxLength(50).HasColumnName("email");
+            user.Property(u => u.Role).HasMaxLength(20).HasColumnName("role");
             user.Property(u => u.Password).HasMaxLength(500).HasColumnName("password");
             user.Property(u => u.CreatedOn).HasColumnName("created_on");
             user.Property(u => u.CreatedBy).HasMaxLength(25).HasColumnName("created_by");

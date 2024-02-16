@@ -10,31 +10,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aa14bd4-f607-4226-a55e-121db273b1f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/JWTConfigExtension.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/SwaggerConfigExtension.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cards.API/Services/Interfaces/IJwtHelper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cards.API/Services/JwtService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cards.API/TokenHelper/JwtConfig.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cards.Infrastructure/DataTypes/UserRoles.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cards.Infrastructure/Seeder/UserSeeder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cards.API/ConfigModels/MethodPermissionsConfig.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cards.API/ConfigModels/PermissionsConfig.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cards.API/Middleware/UserMiddleware.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cards.API/Services/AuthService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cards.API/Services/DTOModels/CardDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cards.API/Services/DTOModels/CurrentUserDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cards.API/Services/DTOModels/UserDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cards.API/Services/Interfaces/IAuthService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Cards/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Cards/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.API/AutoMapping/AutoMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/AutoMapping/AutoMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/BindingModels/UsersController/LoginBindingModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/BindingModels/UsersController/LoginBindingModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Cards.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Cards.API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Controllers/CardsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Controllers/CardsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Controllers/UsersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/DatabaseExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/DatabaseExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/JWTConfigExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/JWTConfigExtension.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/ServiceInjectionExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/ServiceInjectionExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.API/Services/CardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/CardService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.API/Services/Interfaces/ICardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/Interfaces/ICardService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.API/Services/Interfaces/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/Interfaces/IUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.API/Services/JwtService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/JwtService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.API/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/UserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.API/TokenHelper/JwtConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/ConfigModels/JwtConfig.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Context/DatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Context/DatabaseContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Context/EntityConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Context/EntityConfiguration.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Entities/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Migrations/20240215082113_InitialMigration.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Migrations/20240215082113_InitialMigration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Migrations/DatabaseContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Repository/EntityRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Repository/EntityRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Seeder/UserSeeder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Seeder/UserSeeder.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +42,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fa0d074cf0ed4fa4a0a176c8826210f71fc7c0/07/5f85111e/DbSet`1.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -136,7 +138,7 @@
       <option name="presentableId" value="Default" />
       <updated>1707977988504</updated>
       <workItem from="1707977991882" duration="12724000" />
-      <workItem from="1708060252579" duration="5513000" />
+      <workItem from="1708060252579" duration="26281000" />
     </task>
     <servers />
   </component>
@@ -145,5 +147,39 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Cards.API/Services/CardService.cs</url>
+          <line>33</line>
+          <properties documentPath="C:\Repositories\Assessments\Logicea\Cards\Cards.API\Services\CardService.cs" initialLine="33" containingFunctionPresentation="Method 'GetAllCards'">
+            <startOffsets>
+              <option value="1093" />
+              <option value="1121" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1154" />
+              <option value="1144" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Cards.API/Services/CardService.cs</url>
+          <line>31</line>
+          <properties documentPath="C:\Repositories\Assessments\Logicea\Cards\Cards.API\Services\CardService.cs" initialLine="31" containingFunctionPresentation="Method 'GetAllCards'">
+            <startOffsets>
+              <option value="1026" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1355" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

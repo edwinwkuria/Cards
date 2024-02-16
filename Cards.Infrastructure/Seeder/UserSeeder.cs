@@ -11,19 +11,19 @@ public static class UserSeeder
         modelBuilder.Entity<User>().HasData(
             new User
             {
-                Id = Guid.NewGuid(), FirstName = "John", LastName = "Doe", Email = "john.doe@gmail.com", Role = UserRoles.Member.ToString(),
+                Id = Guid.NewGuid(), FirstName = "John", LastName = "Doe", Email = "john.doe@gmail.com", Role = UserRoles.Member,
                 Password = "Password"
             },
             
             new User
             {
-                Id = Guid.NewGuid(), FirstName = "Jane", LastName = "Doe", Email = "jane.doe@gmail.com", Role = UserRoles.Member.ToString(),
+                Id = Guid.NewGuid(), FirstName = "Jane", LastName = "Doe", Email = "jane.doe@gmail.com", Role = UserRoles.Member,
                 Password = "Password"
             },
             
             new User
             {
-                Id = Guid.NewGuid(), FirstName = "Michael", LastName = "Brown", Email = "jane.doe@gmail.com", Role = UserRoles.Admin.ToString(),
+                Id = Guid.NewGuid(), FirstName = "Michael", LastName = "Brown", Email = "jane.doe@gmail.com", Role = UserRoles.Admin,
                 Password = "Password"
             }
             );
