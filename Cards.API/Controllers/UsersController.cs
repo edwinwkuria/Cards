@@ -26,7 +26,7 @@ public class UsersController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet("Get Users")]
+    [HttpGet(Name = "Get Users")]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserDTO>))]
     public async Task<ActionResult> GetUsers()

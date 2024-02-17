@@ -33,6 +33,9 @@ Follow these instructions to set up the .NET project:
     dotnet run --project Cards.API
 10. **Access the application APIs**
     ```bash
-    dotnet run --project Cards.API
+    https://localhost:7111/swagger/index.html
+    On the browser
+11. **Generate user access token**
+    From the /Users API select a user with their respective email and password. Use the email and password on the /Login API to get the access token. Authorize on the swagger frontend to access the Cards API's
 
 
