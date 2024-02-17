@@ -11,6 +11,7 @@ public class AutoMapping : Profile
     public AutoMapping()
     {
         CreateMap<CardBindingModel, Card>();
+        CreateMap<EditCardBindingModel, Card>();
         CreateMap<LoginBindingModel, User>();
         
         CreateMap<Card, CardDTO>();

@@ -36,6 +36,11 @@ public class UsersController : ControllerBase
     [HttpPost("login")]
     public ActionResult Login([FromBody] LoginBindingModel login)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
         var user = _mapper.Map<User>(login);
         var token = _userService.LoginUser(user);
         return Ok(token);

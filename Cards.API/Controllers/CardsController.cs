@@ -37,6 +37,10 @@ public class CardsController : ControllerBase
     [HttpPost()]
     public ActionResult CreateCards([FromBody] CardBindingModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
         var card = _mapper.Map<Card>(model);
 
         var response = _cardService.CreateCard(card);
@@ -44,8 +48,13 @@ public class CardsController : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    public ActionResult UpdateCard(Guid id, [FromBody] CardBindingModel model)
+    public ActionResult UpdateCard(Guid id, [FromBody] EditCardBindingModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
         var card = _mapper.Map<Card>(model);
 
         card.Id = id;

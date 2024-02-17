@@ -4,8 +4,9 @@ namespace Cards.BindingModels.UsersController;
 
 public class LoginBindingModel
 {
-    [Required]
+    [Required(ErrorMessage = "Email is required.")]
+    [EmailAddress(ErrorMessage = "Invalid email address.")]
     public string Email { get; set; }
-    [Required]
+    [Required(ErrorMessage = "Password is required.")]
     public string Password { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cards.API.ConfigModels;
+using Cards.Infrastructure.CryptoGraphy;
 using Cards.Infrastructure.Entities;
 using Cards.Infrastructure.Repository.Abstract;
 using Cards.Services.DTOModels;
@@ -33,8 +34,15 @@ public class UserService : IUserService
         return _mapper.Map<UserDTO>(user);
     }
 
-    public string LoginUser(User user)
+    public string LoginUser(User model)
     {
-        return _jwtHelper.GenerateUserToken(user);
+        var user = _repository.All.FirstOrDefault(x => x.Email.Equals(model.Email));
+        if (user == null)
+            return String.Empty;
+        
+        if(user.Password.Equals(PasswordHelper.HashPassword(model.Password, user.Salt)))
+            return _jwtHelper.GenerateUserToken(user);
+        
+        return String.Empty;
     }
 }

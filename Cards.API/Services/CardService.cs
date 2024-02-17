@@ -49,6 +49,7 @@ public class CardService : ICardService
     public CardDTO CreateCard(Card card)
     {
         card.CreatedBy = user.Id;
+        card.Status = CardStatus.ToDo;
         var response = _repository.Insert(card);
         _iuow.SaveChanges();
         

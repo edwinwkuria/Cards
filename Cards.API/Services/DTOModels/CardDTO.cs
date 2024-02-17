@@ -8,5 +8,6 @@ public class CardDTO
     public string Name { get; set; }
     public string Description { get; set; }
     public string Colour { get; set; }
-    public CardStatus Status { get; set; }
+    public CardStatus Status { internal get; set; }
+    public string CardStatus => this.Status.ToString();
 }

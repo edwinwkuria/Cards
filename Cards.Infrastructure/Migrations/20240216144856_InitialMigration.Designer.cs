@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cards.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240216053739_InitialMigration")]
+    [Migration("20240216144856_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -145,9 +145,15 @@ namespace Cards.Infrastructure.Migrations
                         .HasColumnType("character varying(500)")
                         .HasColumnName("password");
 
-                    b.Property<string>("Role")
+                    b.Property<int>("Role")
+                        .HasMaxLength(20)
+                        .HasColumnType("integer")
+                        .HasColumnName("role");
+
+                    b.Property<byte[]>("Salt")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("bytea")
+                        .HasColumnName("salt");
 
                     b.HasKey("Id");
 
@@ -156,7 +162,7 @@ namespace Cards.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("40d985e0-44a5-4cd7-aaec-d59059691f2b"),
+                            Id = new Guid("26bb5a0f-2911-4c04-b26b-4063cb12ca6e"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -166,12 +172,13 @@ namespace Cards.Infrastructure.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastName = "Doe",
-                            Password = "Password",
-                            Role = "Member"
+                            Password = "MEkfFLOCi1N9sdqFbfM7eDTy7/Q=",
+                            Role = 1,
+                            Salt = new byte[] { 118, 23, 24, 152, 48, 146, 54, 49, 227, 195, 93, 148, 78, 34, 125, 44 }
                         },
                         new
                         {
-                            Id = new Guid("f5174e11-8ada-454b-8552-30e9a97c16aa"),
+                            Id = new Guid("6b88854d-8c61-44b7-9d1c-b27b79dd407a"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -181,12 +188,13 @@ namespace Cards.Infrastructure.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastName = "Doe",
-                            Password = "Password",
-                            Role = "Member"
+                            Password = "jAgJpPqr/vtHe6ENS2LkbiXkc6E=",
+                            Role = 1,
+                            Salt = new byte[] { 179, 237, 78, 152, 150, 51, 86, 99, 210, 12, 120, 200, 149, 131, 113, 255 }
                         },
                         new
                         {
-                            Id = new Guid("fee659f7-9f52-417f-95d1-21054fe33eec"),
+                            Id = new Guid("59b00b0e-30a4-4daa-b485-0d845495b96f"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -196,8 +204,9 @@ namespace Cards.Infrastructure.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastName = "Brown",
-                            Password = "Password",
-                            Role = "Admin"
+                            Password = "qzcHMYCDG8uNDLtLSh3H5PapXvc=",
+                            Role = 0,
+                            Salt = new byte[] { 34, 107, 43, 40, 2, 198, 171, 112, 200, 169, 66, 128, 211, 174, 29, 7 }
                         });
                 });
 #pragma warning restore 612, 618
