@@ -22,55 +22,6 @@ public class UnitOfWork : IUnitOfWork
         return _context.SaveChanges();
     }
 
-    public void Dispose(bool disposing)
-    {
-        if (!_disposed && disposing)
-        {
-            _context.Dispose();
-
-            if (_repositories != null && _repositories.Values != null && _repositories.Values.OfType<IDisposable>().Any())
-            {
-                foreach (IDisposable repository in _repositories.Values)
-                {
-                    repository.Dispose();// dispose all repositries
-                }
-            }
-        }
-        _disposed = true;
-        GC.SuppressFinalize(this);
-    }
-
-    public void BeginTransaction()
-    {
-        _context.BeginTransaction();
-    }
-
-    public int Commit()
-    {
-        return _context.Commit();
-    }
-
-    public void Rollback()
-    {
-        _context.Rollback();
-    }
-
-    public Task<int> SaveChangesAsync()
-    {
-        return _context.SaveChangesAsync();
-    }
-
-    public Task<int> CommitAsync()
-    {
-        return _context.CommitAsync();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
     public IRepository<TEntity> Repository<TEntity>() where TEntity : BaseModel
     {
         if (_repositories == null)

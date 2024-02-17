@@ -27,7 +27,7 @@ public static class UserSeeder
             
             new User
             {
-                Id = Guid.NewGuid(), FirstName = "Michael", LastName = "Brown", Email = "jane.doe@gmail.com", Role = UserRoles.Admin,
+                Id = Guid.NewGuid(), FirstName = "Michael", LastName = "Brown", Email = "michael.brown@gmail.com", Role = UserRoles.Admin,
                 Salt = salt3, Password = PasswordHelper.HashPassword("Michael123", salt1)
             }
             );

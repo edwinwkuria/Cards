@@ -7,7 +7,7 @@ using Cards.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Cards.Services;
+namespace Cards.API.Services;
 
 public class JwtService : IJwtHelper
 {

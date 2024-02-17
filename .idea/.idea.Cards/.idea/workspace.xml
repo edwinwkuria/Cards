@@ -10,15 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aa14bd4-f607-4226-a55e-121db273b1f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Cards.API/Services/DTOModels/SearchDTO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Cards/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Cards/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/ConfigModels/MethodPermissionsConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/ConfigModels/MethodPermissionsConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Controllers/CardsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Controllers/CardsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/CardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/CardService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/Interfaces/ICardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/Interfaces/ICardService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Repository/Abstract/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Repository/Abstract/IRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Repository/EntityRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Repository/EntityRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +24,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fa0d074cf0ed4fa4a0a176c8826210f71fc7c0/07/5f85111e/DbSet`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f9daeeaab8409865442b5e80e634dc64dae9a14892fe81e0f17b46f51b2c48f8/DbSet.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -43,26 +38,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/setup__project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "cleanup/code__cleanup",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\HP\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\HP\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\HP\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\HP\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\HP\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\HP\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Cards.API">
     <configuration name="Cards.API" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Cards.API/Cards.API.csproj" />
@@ -124,7 +119,7 @@
       <updated>1707977988504</updated>
       <workItem from="1707977991882" duration="12724000" />
       <workItem from="1708060252579" duration="32078000" />
-      <workItem from="1708142004368" duration="5685000" />
+      <workItem from="1708142004368" duration="18846000" />
     </task>
     <servers />
   </component>

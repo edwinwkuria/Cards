@@ -18,14 +18,7 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
     }
 
     public IQueryable<TEntity> All => dbSet.Where(entity => !entity.IsDeleted).AsQueryable();
-
-    public Task BulkInsertAsync(List<TEntity> entities) => context.AddRangeAsync(entities);
-
-    public void BulkUpdate(List<TEntity> entities)
-    {
-        context.UpdateRange(entities);
-    }
-
+    
     public void Delete(TEntity entity)
     {
         entity.IsDeleted = true;
@@ -36,6 +29,7 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
     public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
     {
         IQueryable<TEntity> query = dbSet;
+        query = query.Where(c => !c.IsDeleted);
 
         if (filter != null)
             query = query.Where(filter);
@@ -46,15 +40,16 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
         return query;
     }
 
-    public TEntity Get(object id)
+    public TEntity? Get(object id)
     {
         var entity = dbSet.Find(id);
-        return entity != null && !entity.IsDeleted ? entity : null;
+        return entity is { IsDeleted: false } ? entity : null;
     }
 
-    public Task<TEntity> GetAsync(object id)
+    public async Task<TEntity?> GetAsync(object id)
     {
-        return dbSet.FindAsync(id).AsTask();
+        var entity = await dbSet.FindAsync(id).AsTask();
+        return entity is { IsDeleted: false } ? entity : null;
     }
 
     public TEntity Insert(TEntity entity)
@@ -82,10 +77,8 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
 
         _disposed = true;
     }
-
     public void Dispose()
     {
-        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }

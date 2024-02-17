@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Net;
 using AutoMapper;
 using Cards.API.ConfigModels;
 using Cards.Infrastructure.DataTypes;
@@ -28,41 +29,47 @@ public class CardService : ICardService
         user = authService.GetCurrentUser();
     }
 
-    public List<CardDTO> GetAllCards()
+    public async Task<(HttpStatusCode statusCode, string message, List<CardDTO> data)> GetAllCards(GetCardsDTO model)
     {
-        var permission = GetUserMethodPermission(user.Role, MethodPermissionsConfig.GetAllCards);
-        return permission switch
-        {
-            "read_cards_all" => _repository.All.Select(x => _mapper.Map<CardDTO>(x)).ToList(),
-            "read_cards_own" => _repository.All.Where(y => y.CreatedBy.Equals(user.Id))
-                .Select(x => _mapper.Map<CardDTO>(x)).ToList(),
-            _ => new List<CardDTO>()
-        };
+        var canViewAllCards = CanViewAllCards(MethodPermissionsConfig.DeleteCard);
+        
+        var cards = _repository.Get(
+                filter: c => (canViewAllCards || c.CreatedBy.Equals(user.Id)), 
+                orderBy: GetCardOrderBy(model.SortBy, model.SortOrder))
+            .Skip(model.Offset).Take(model.Limit).Select(x => _mapper.Map<CardDTO>(x)).ToList();
+        
+        return (HttpStatusCode.OK, "Success", cards);
     }
 
-    public CardDTO GetCardById(Guid id)
+    public async Task<(HttpStatusCode statusCode, string message, CardDTO data)> GetCardById(Guid id)
     {
-        var card = _repository.Get(id);
+        var card = await _repository.GetAsync(id);
+        if(card == null)
+            return (HttpStatusCode.BadRequest, "Card not found", _mapper.Map<CardDTO>(card));
         
         return CanPerformAction(MethodPermissionsConfig.GetCardById, card) 
-            ? _mapper.Map<CardDTO>(card) : new CardDTO();
+            ? (HttpStatusCode.OK, "Success", _mapper.Map<CardDTO>(card))
+            : (HttpStatusCode.Forbidden, "User permission not allowed",new CardDTO());
     }
 
-    public CardDTO CreateCard(Card card)
+    public async Task<(HttpStatusCode statusCode, string message, CardDTO data)> CreateCard(Card card)
     {
         card.CreatedBy = user.Id;
         card.Status = CardStatus.ToDo;
         var response = _repository.Insert(card);
         _iuow.SaveChanges();
         
-        return _mapper.Map<CardDTO>(response);
+        return (HttpStatusCode.Created, "Success", _mapper.Map<CardDTO>(response));
     }
 
-    public CardDTO UpdateCard(Card model)
+    public async Task<(HttpStatusCode statusCode, string message, CardDTO data)> UpdateCard(Card model)
     {
         var card = _repository.Get(model.Id);
+        if (card == null)
+            return (HttpStatusCode.BadRequest, "Card not found", _mapper.Map<CardDTO>(card));
+            
         if (!CanPerformAction(MethodPermissionsConfig.UpdateCard, card))
-            return new CardDTO();
+            return (HttpStatusCode.Forbidden, "User permission not allowed",new CardDTO());
 
         card.Name = model.Name;
         card.Description = model.Description;
@@ -71,30 +78,33 @@ public class CardService : ICardService
         _repository.Update(card);
         _iuow.SaveChanges();
         
-        return _mapper.Map<CardDTO>(card);
+        return (HttpStatusCode.OK, "Success", _mapper.Map<CardDTO>(card));
     }
 
-    public bool DeleteCard(Guid id)
+    public async Task<(HttpStatusCode statusCode, string message, bool data)> DeleteCard(Guid id)
     {
         var card = _repository.Get(id);
+        if (card == null)
+            return (HttpStatusCode.BadRequest, "Card not found", false);
 
         if (!CanPerformAction(MethodPermissionsConfig.DeleteCard, card))
-            return false;
+            return (HttpStatusCode.Forbidden, "User Permission not found",false);
         
         _repository.Delete(card);
         _iuow.SaveChanges();
-        return true;    }
+        return (HttpStatusCode.OK, "Success", true);
+    }
 
-    public List<CardDTO> SearchCard(SearchDTO model)
+    public async Task<(HttpStatusCode statusCode, string message, List<CardDTO> data)> SearchCard(SearchDTO model)
     {
-        var userPermission = GetUserMethodPermission(user.Role, MethodPermissionsConfig.SearchCard) + "_all";
-        var can_access_all = "search_cards_all".Equals(userPermission, StringComparison.OrdinalIgnoreCase);
+        var canViewAllCards = CanViewAllCards(MethodPermissionsConfig.DeleteCard);
+        
         var cards = _repository.Get(
-                filter: GetFilterExpression(model), orderBy: GetOrderBy(model))
-            .Where(c => can_access_all || c.CreatedBy.Equals(user.Id))
+                filter: GetCardFilterExpression(model), orderBy: GetCardOrderBy(model.SortBy, model.SortOrder))
+            .Where(c => canViewAllCards || c.CreatedBy.Equals(user.Id))
             .Skip(model.Offset).Take(model.Limit).Select(x => _mapper.Map<CardDTO>(x)).ToList();
 
-        return cards;
+        return (HttpStatusCode.OK, "success",cards);
     }
 
     private string? GetUserMethodPermission(UserRoles? userRoles, string method)
@@ -119,28 +129,36 @@ public class CardService : ICardService
 
         return false;
     }
+
+    private bool CanViewAllCards(string methodPermission)
+    {
+        var permission = GetUserMethodPermission(user.Role,methodPermission) + "_all";
+        if (String.IsNullOrWhiteSpace(permission))
+            return false;
+        return  "search_cards_all".Equals(permission, StringComparison.OrdinalIgnoreCase);
+    }
     
-    private Expression<Func<Card, bool>> GetFilterExpression(SearchDTO card)
+    private Expression<Func<Card, bool>> GetCardFilterExpression(SearchDTO card)
     {
         return c =>
             (string.IsNullOrEmpty(card.Name) || c.Name.Contains(card.Name)) &&
             (string.IsNullOrEmpty(card.Colour) || c.Colour == card.Colour) &&
-            (string.IsNullOrEmpty(card.Status) || c.Status.ToString() == card.Status) &&
+            (string.IsNullOrEmpty(card.Status.ToString()) || c.Status == card.Status) &&
             (!card.CreatedDate.HasValue || c.CreatedOn.Date == card.CreatedDate.Value.Date);
     }
     
-    private Func<IQueryable<Card>, IOrderedQueryable<Card>> GetOrderBy(SearchDTO card)
+    private Func<IQueryable<Card>, IOrderedQueryable<Card>> GetCardOrderBy(string sortBy, string sortOrder)
     {
-        switch (card.SortBy.ToLower())
+        switch (sortBy.ToLower())
         {
-            case "color":
-                return card.SortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.Colour) : q => q.OrderByDescending(c => c.Colour);
+            case "colour":
+                return sortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.Colour) : q => q.OrderByDescending(c => c.Colour);
             case "status":
-                return card.SortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.Status) : q => q.OrderByDescending(c => c.Status);
-            case "createddate":
-                return card.SortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.CreatedOn) : q => q.OrderByDescending(c => c.CreatedOn);
+                return sortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.Status) : q => q.OrderByDescending(c => c.Status);
+            case "createdon":
+                return sortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.CreatedOn) : q => q.OrderByDescending(c => c.CreatedOn);
             default:
-                return card.SortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.Name) : q => q.OrderByDescending(c => c.Name);
+                return sortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.Name) : q => q.OrderByDescending(c => c.Name);
         }
     }
 }
