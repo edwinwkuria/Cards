@@ -2,10 +2,10 @@
 
 public static class MethodPermissionsConfig
 {
-    public static readonly string GetAllCards = "read_cards";
-    public static readonly string GetCardById = "read_cards";
-    public static readonly string CreateCard = "create_cards";
-    public static readonly string UpdateCard = "update_cards";
-    public static readonly string DeleteCard = "delete_cards";
-    public static readonly string SearchCard = "search_cards";
+    public const string GetAllCards = "read_cards";
+    public const string GetCardById = "read_cards";
+    public const string CreateCard = "create_cards";
+    public const string UpdateCard = "update_cards";
+    public const string DeleteCard = "delete_cards";
+    public const string SearchCard = "search_cards";
 }

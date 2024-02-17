@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using AutoMapper;
 using Cards.API.ConfigModels;
 using Cards.Infrastructure.CryptoGraphy;
 using Cards.Infrastructure.Entities;
@@ -22,27 +23,27 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public List<UserDTO> GetAllUsers()
+    public (HttpStatusCode statusCode, string message, List<UserDTO> data) GetAllUsers()
     {
         var users = _repository.All.Select(x => _mapper.Map<UserDTO>(x)).ToList();
-        return users;
+        return (HttpStatusCode.OK, "Success", users);
     }
 
-    public UserDTO GetUserById(Guid id)
+    public (HttpStatusCode statusCode, string message, UserDTO data) GetUserById(Guid id)
     {
         var user = _repository.Get(id);
-        return _mapper.Map<UserDTO>(user);
+        return (HttpStatusCode.OK, "Success", _mapper.Map<UserDTO>(user));
     }
 
-    public string LoginUser(User model)
+    public (HttpStatusCode statusCode, string message, string data) LoginUser(User model)
     {
         var user = _repository.All.FirstOrDefault(x => x.Email.Equals(model.Email));
         if (user == null)
-            return String.Empty;
+            return (HttpStatusCode.BadRequest, "User Not Found", String.Empty);
         
         if(user.Password.Equals(PasswordHelper.HashPassword(model.Password, user.Salt)))
-            return _jwtHelper.GenerateUserToken(user);
+            return (HttpStatusCode.OK, "Success", _jwtHelper.GenerateUserToken(user));
         
-        return String.Empty;
+        return (HttpStatusCode.BadRequest, "Incorrect Password", String.Empty);
     }
 }

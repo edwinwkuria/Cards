@@ -18,14 +18,7 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
     }
 
     public IQueryable<TEntity> All => dbSet.Where(entity => !entity.IsDeleted).AsQueryable();
-
-    public Task BulkInsertAsync(List<TEntity> entities) => context.AddRangeAsync(entities);
-
-    public void BulkUpdate(List<TEntity> entities)
-    {
-        context.UpdateRange(entities);
-    }
-
+    
     public void Delete(TEntity entity)
     {
         entity.IsDeleted = true;

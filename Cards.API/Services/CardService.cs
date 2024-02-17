@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Net;
 using AutoMapper;
 using Cards.API.ConfigModels;
 using Cards.Infrastructure.DataTypes;
@@ -28,41 +29,42 @@ public class CardService : ICardService
         user = authService.GetCurrentUser();
     }
 
-    public List<CardDTO> GetAllCards()
+    public (HttpStatusCode statusCode, string message, List<CardDTO> data) GetAllCards()
     {
         var permission = GetUserMethodPermission(user.Role, MethodPermissionsConfig.GetAllCards);
         return permission switch
         {
-            "read_cards_all" => _repository.All.Select(x => _mapper.Map<CardDTO>(x)).ToList(),
-            "read_cards_own" => _repository.All.Where(y => y.CreatedBy.Equals(user.Id))
-                .Select(x => _mapper.Map<CardDTO>(x)).ToList(),
-            _ => new List<CardDTO>()
+            "read_cards_all" => (HttpStatusCode.OK, "Success",_repository.All.Select(x => _mapper.Map<CardDTO>(x)).ToList()),
+            "read_cards_own" => (HttpStatusCode.OK, "Success", _repository.All.Where(y => y.CreatedBy.Equals(user.Id))
+                .Select(x => _mapper.Map<CardDTO>(x)).ToList()),
+            _ => (HttpStatusCode.Forbidden, "User Permission not provided", new List<CardDTO>())
         };
     }
 
-    public CardDTO GetCardById(Guid id)
+    public (HttpStatusCode statusCode, string message, CardDTO data) GetCardById(Guid id)
     {
         var card = _repository.Get(id);
         
         return CanPerformAction(MethodPermissionsConfig.GetCardById, card) 
-            ? _mapper.Map<CardDTO>(card) : new CardDTO();
+            ? (HttpStatusCode.OK, "Success", _mapper.Map<CardDTO>(card))
+            : (HttpStatusCode.Forbidden, "User permission not allowed",new CardDTO());
     }
 
-    public CardDTO CreateCard(Card card)
+    public (HttpStatusCode statusCode, string message, CardDTO data) CreateCard(Card card)
     {
         card.CreatedBy = user.Id;
         card.Status = CardStatus.ToDo;
         var response = _repository.Insert(card);
         _iuow.SaveChanges();
         
-        return _mapper.Map<CardDTO>(response);
+        return (HttpStatusCode.Created, "Success", _mapper.Map<CardDTO>(response));
     }
 
-    public CardDTO UpdateCard(Card model)
+    public (HttpStatusCode statusCode, string message, CardDTO data) UpdateCard(Card model)
     {
         var card = _repository.Get(model.Id);
         if (!CanPerformAction(MethodPermissionsConfig.UpdateCard, card))
-            return new CardDTO();
+            return (HttpStatusCode.Forbidden, "User permission not allowed",new CardDTO());
 
         card.Name = model.Name;
         card.Description = model.Description;
@@ -71,21 +73,22 @@ public class CardService : ICardService
         _repository.Update(card);
         _iuow.SaveChanges();
         
-        return _mapper.Map<CardDTO>(card);
+        return (HttpStatusCode.OK, "Success", _mapper.Map<CardDTO>(card));
     }
 
-    public bool DeleteCard(Guid id)
+    public (HttpStatusCode statusCode, string message, bool data) DeleteCard(Guid id)
     {
         var card = _repository.Get(id);
 
         if (!CanPerformAction(MethodPermissionsConfig.DeleteCard, card))
-            return false;
+            return (HttpStatusCode.Forbidden, "User Permission not found",false);
         
         _repository.Delete(card);
         _iuow.SaveChanges();
-        return true;    }
+        return (HttpStatusCode.OK, "Success", true);
+    }
 
-    public List<CardDTO> SearchCard(SearchDTO model)
+    public (HttpStatusCode statusCode, string message, List<CardDTO> data) SearchCard(SearchDTO model)
     {
         var userPermission = GetUserMethodPermission(user.Role, MethodPermissionsConfig.SearchCard) + "_all";
         var can_access_all = "search_cards_all".Equals(userPermission, StringComparison.OrdinalIgnoreCase);
@@ -94,7 +97,7 @@ public class CardService : ICardService
             .Where(c => can_access_all || c.CreatedBy.Equals(user.Id))
             .Skip(model.Offset).Take(model.Limit).Select(x => _mapper.Map<CardDTO>(x)).ToList();
 
-        return cards;
+        return (HttpStatusCode.OK, "success",cards);
     }
 
     private string? GetUserMethodPermission(UserRoles? userRoles, string method)
@@ -125,7 +128,7 @@ public class CardService : ICardService
         return c =>
             (string.IsNullOrEmpty(card.Name) || c.Name.Contains(card.Name)) &&
             (string.IsNullOrEmpty(card.Colour) || c.Colour == card.Colour) &&
-            (string.IsNullOrEmpty(card.Status) || c.Status.ToString() == card.Status) &&
+            (string.IsNullOrEmpty(card.Status.ToString()) || c.Status == card.Status) &&
             (!card.CreatedDate.HasValue || c.CreatedOn.Date == card.CreatedDate.Value.Date);
     }
     

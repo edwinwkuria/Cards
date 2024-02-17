@@ -49,11 +49,6 @@ public class DatabaseContext : DbContext, IEntitiesContext
         return saveChangesAsync;
     }
 
-    public override void Dispose()
-    {
-        base.Dispose();
-    }
-
     public void Rollback()
     {
         _transaction?.Rollback();

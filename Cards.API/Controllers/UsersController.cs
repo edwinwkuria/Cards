@@ -1,6 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using System.Runtime.InteropServices;
+using AutoMapper;
+using Cards.API.Responses;
 using Cards.BindingModels.UsersController;
 using Cards.Infrastructure.Entities;
+using Cards.Services.DTOModels;
 using Cards.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +12,7 @@ namespace Cards.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
+[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponse))]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -19,31 +24,67 @@ public class UsersController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
-    public ActionResult<IEnumerable<string>> GetUsers()
+    [HttpGet("Get Users")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserDTO>))]
+    public ActionResult GetUsers()
     {
-        var users = _userService.GetAllUsers();
-        return Ok(users);
+        try
+        {
+            var response = _userService.GetAllUsers();
+            return response.statusCode == HttpStatusCode.OK
+                ? StatusCode((int)response.statusCode, response.data)
+                : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
+        }
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "Get User")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDTO))]
     public ActionResult<string> GetUser(Guid id)
     {
-        var user = _userService.GetUserById(id);
-        return Ok(user);
+        try
+        {
+            var response = _userService.GetUserById(id);
+            return response.statusCode == HttpStatusCode.OK
+                ? StatusCode((int)response.statusCode, response.data)
+                : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
+        }
     }
 
-    [HttpPost("login")]
+    [HttpPost("login", Name = "Login")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     public ActionResult Login([FromBody] LoginBindingModel login)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return StatusCode((int) HttpStatusCode.BadRequest,ModelState);
         }
         
-        var user = _mapper.Map<User>(login);
-        var token = _userService.LoginUser(user);
-        return Ok(token);
+        try
+        {
+            var user = _mapper.Map<User>(login);
+            var response = _userService.LoginUser(user);
+            return response.statusCode == HttpStatusCode.OK
+                ? StatusCode((int)response.statusCode, response.data)
+                : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
+        }
     }
 }
 
