@@ -10,18 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aa14bd4-f607-4226-a55e-121db273b1f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Cards.API/Services/DTOModels/GetCardsDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Controllers/CardsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Controllers/CardsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Controllers/UsersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/ServiceInjectionExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/ServiceCollectionExtensions/ServiceInjectionExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/CardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/CardService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/DTOModels/SearchDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/DTOModels/SearchDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/Interfaces/ICardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/Interfaces/ICardService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/Interfaces/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/Interfaces/IUserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/JwtService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/JwtService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Repository/Abstract/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Repository/Abstract/IRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Cards/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Cards/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Repository/EntityRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Repository/EntityRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +119,7 @@
       <updated>1707977988504</updated>
       <workItem from="1707977991882" duration="12724000" />
       <workItem from="1708060252579" duration="32078000" />
-      <workItem from="1708142004368" duration="15216000" />
+      <workItem from="1708142004368" duration="18846000" />
     </task>
     <servers />
   </component>
