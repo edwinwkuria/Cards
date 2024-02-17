@@ -27,11 +27,11 @@ public class UsersController : ControllerBase
     [HttpGet("Get Users")]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserDTO>))]
-    public ActionResult GetUsers()
+    public async Task<ActionResult> GetUsers()
     {
         try
         {
-            var response = _userService.GetAllUsers();
+            var response = await _userService.GetAllUsers();
             return response.statusCode == HttpStatusCode.OK
                 ? StatusCode((int)response.statusCode, response.data)
                 : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
@@ -46,11 +46,11 @@ public class UsersController : ControllerBase
     [HttpGet("{id}", Name = "Get User")]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDTO))]
-    public ActionResult<string> GetUser(Guid id)
+    public async Task<ActionResult> GetUser(Guid id)
     {
         try
         {
-            var response = _userService.GetUserById(id);
+            var response = await _userService.GetUserById(id);
             return response.statusCode == HttpStatusCode.OK
                 ? StatusCode((int)response.statusCode, response.data)
                 : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
@@ -65,7 +65,7 @@ public class UsersController : ControllerBase
     [HttpPost("login", Name = "Login")]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-    public ActionResult Login([FromBody] LoginBindingModel login)
+    public async Task<ActionResult> Login([FromBody] LoginBindingModel login)
     {
         if (!ModelState.IsValid)
         {
@@ -75,7 +75,7 @@ public class UsersController : ControllerBase
         try
         {
             var user = _mapper.Map<User>(login);
-            var response = _userService.LoginUser(user);
+            var response = await  _userService.LoginUser(user);
             return response.statusCode == HttpStatusCode.OK
                 ? StatusCode((int)response.statusCode, response.data)
                 : StatusCode((int)response.statusCode, new ErrorResponse(response.message));

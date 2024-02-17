@@ -39,15 +39,16 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
         return query;
     }
 
-    public TEntity Get(object id)
+    public TEntity? Get(object id)
     {
         var entity = dbSet.Find(id);
-        return entity != null && !entity.IsDeleted ? entity : null;
+        return entity is { IsDeleted: false } ? entity : null;
     }
 
-    public Task<TEntity> GetAsync(object id)
+    public async Task<TEntity?> GetAsync(object id)
     {
-        return dbSet.FindAsync(id).AsTask();
+        var entity = await dbSet.FindAsync(id).AsTask();
+        return entity is { IsDeleted: false } ? entity : null;
     }
 
     public TEntity Insert(TEntity entity)

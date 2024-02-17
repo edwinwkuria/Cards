@@ -6,7 +6,7 @@ namespace Cards.Services.Interfaces;
 
 public interface IUserService
 {
-    (HttpStatusCode statusCode, string message, List<UserDTO> data) GetAllUsers();
-    (HttpStatusCode statusCode, string message, UserDTO data) GetUserById(Guid id);
-    (HttpStatusCode statusCode, string message, string data) LoginUser(User user);
+    Task<(HttpStatusCode statusCode, string message, List<UserDTO> data)> GetAllUsers();
+    Task<(HttpStatusCode statusCode, string message, UserDTO data)> GetUserById(Guid id);
+    Task<(HttpStatusCode statusCode, string message, string data)> LoginUser(User user);
 }

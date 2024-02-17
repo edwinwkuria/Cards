@@ -29,11 +29,13 @@ public class CardsController : ControllerBase
     [HttpGet(Name = "Get All Cards")]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(List<CardDTO>))]
-    public ActionResult GetCards()
+    public async Task<ActionResult> GetCards(int offset = 0, int limit = 10, string? sortBy = "createdon",
+        string? sortOrder = "asc")
     {
         try
         {
-            var response = _cardService.GetAllCards();
+            var model = new GetCardsDTO(offset, limit, sortBy, sortOrder);
+            var response = await _cardService.GetAllCards(model);
             return response.statusCode == HttpStatusCode.OK
                 ? StatusCode((int)response.statusCode, response.data)
                 : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
@@ -49,11 +51,11 @@ public class CardsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CardDTO))]
-    public ActionResult<string> GetCard(Guid id)
+    public async Task<ActionResult> GetCard(Guid id)
     {
         try
         {
-            var response = _cardService.GetCardById(id);
+            var response = await _cardService.GetCardById(id);
             return response.statusCode == HttpStatusCode.OK
                 ? StatusCode((int)response.statusCode, response.data)
                 : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
@@ -68,7 +70,7 @@ public class CardsController : ControllerBase
     [HttpPost(Name = "Create Card")]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(SerializableError))]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CardDTO))]
-    public ActionResult CreateCards([FromBody] CardBindingModel model)
+    public async Task<ActionResult> CreateCards([FromBody] CardBindingModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -78,7 +80,7 @@ public class CardsController : ControllerBase
         try
         {
             var cardModel = _mapper.Map<Card>(model);
-            var response = _cardService.CreateCard(cardModel);
+            var response = await _cardService.CreateCard(cardModel);
             return response.statusCode == HttpStatusCode.Created
                 ? StatusCode((int)response.statusCode, response.data)
                 : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
@@ -94,7 +96,7 @@ public class CardsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(SerializableError))]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CardDTO))]
-    public ActionResult UpdateCard(Guid id, [FromBody] EditCardBindingModel model)
+    public async Task<ActionResult> UpdateCard(Guid id, [FromBody] EditCardBindingModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -105,7 +107,7 @@ public class CardsController : ControllerBase
         {
             var card = _mapper.Map<Card>(model);
             card.Id = id;
-            var response = _cardService.UpdateCard(card);
+            var response = await _cardService.UpdateCard(card);
             return response.statusCode == HttpStatusCode.OK
                 ? StatusCode((int)response.statusCode, response.data)
                 : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
@@ -122,11 +124,11 @@ public class CardsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CardDTO))]
-    public ActionResult DeleteCard(Guid id)
+    public async Task<ActionResult> DeleteCard(Guid id)
     {
         try
         {
-            var response = _cardService.DeleteCard(id);
+            var response = await _cardService.DeleteCard(id);
             return response.statusCode == HttpStatusCode.OK
                 ? StatusCode((int)response.statusCode, response.data)
                 : StatusCode((int)response.statusCode, new ErrorResponse(response.message));
@@ -142,14 +144,14 @@ public class CardsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CardDTO>))]
-    public ActionResult SearchCard(string? name = null, string? color = null, CardStatus? status = null,
-        DateTime? createdDate = null, int page = 1, int size = 10, int offset = 0, int limit = 10, string sortBy = "name",
+    public async Task<ActionResult> SearchCard(string? name = null, string? color = null, CardStatus? status = null,
+        DateTime? createdDate = null, int offset = 0, int limit = 10, string sortBy = "name",
         string sortOrder = "asc")
     {
         try
         {
-            var model = new SearchDTO(name, color, status, createdDate, page, size, offset, limit, sortBy, sortOrder);
-            var response = _cardService.SearchCard(model);
+            var model = new SearchDTO(name, color, status, createdDate, offset, limit, sortBy, sortOrder);
+            var response = await _cardService.SearchCard(model);
             return response.statusCode == HttpStatusCode.OK
                 ? StatusCode((int)response.statusCode, response.data)
                 : StatusCode((int)response.statusCode, new ErrorResponse(response.message));

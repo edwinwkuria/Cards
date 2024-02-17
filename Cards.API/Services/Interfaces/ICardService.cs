@@ -6,11 +6,11 @@ namespace Cards.Services.Interfaces;
 
 public interface ICardService
 {
-    (HttpStatusCode statusCode, string message, List<CardDTO> data) GetAllCards();
-    (HttpStatusCode statusCode, string message, CardDTO data) GetCardById(Guid id);
-    (HttpStatusCode statusCode, string message, CardDTO data) CreateCard(Card card);
-    (HttpStatusCode statusCode, string message, CardDTO data) UpdateCard(Card card);
-    (HttpStatusCode statusCode, string message, bool data) DeleteCard(Guid id);
-    (HttpStatusCode statusCode, string message, List<CardDTO> data) SearchCard(SearchDTO model);
+    Task<(HttpStatusCode statusCode, string message, List<CardDTO> data)> GetAllCards(GetCardsDTO cards);
+    Task<(HttpStatusCode statusCode, string message, CardDTO data)> GetCardById(Guid id);
+    Task<(HttpStatusCode statusCode, string message, CardDTO data)> CreateCard(Card card);
+    Task<(HttpStatusCode statusCode, string message, CardDTO data)> UpdateCard(Card card);
+    Task<(HttpStatusCode statusCode, string message, bool data)> DeleteCard(Guid id);
+    Task<(HttpStatusCode statusCode, string message, List<CardDTO> data)> SearchCard(SearchDTO model);
 
 }
