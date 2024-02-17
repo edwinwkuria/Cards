@@ -15,11 +15,13 @@ namespace Cards.Controllers;
 [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponse))]
 public class UsersController : ControllerBase
 {
+    private readonly ILogger<CardsController> _logger;
     private readonly IUserService _userService;
     private readonly IMapper _mapper;
     
-    public UsersController(IUserService userService, IMapper mapper)
+    public UsersController(ILogger<CardsController> logger,IUserService userService, IMapper mapper)
     {
+        _logger = logger;
         _userService = userService;
         _mapper = mapper;
     }
@@ -38,7 +40,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e.ToString());
             return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
         }
     }
@@ -57,7 +59,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e.ToString());
             return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
         }
     }
@@ -82,7 +84,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e.ToString());
             return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
         }
     }

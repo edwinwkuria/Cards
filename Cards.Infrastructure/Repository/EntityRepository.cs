@@ -29,6 +29,7 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
     public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
     {
         IQueryable<TEntity> query = dbSet;
+        query = query.Where(c => !c.IsDeleted);
 
         if (filter != null)
             query = query.Where(filter);

@@ -18,10 +18,12 @@ namespace Cards.Controllers;
 [Authorize]
 public class CardsController : ControllerBase
 {
+    private readonly ILogger<CardsController> _logger;
     private readonly ICardService _cardService;
     private readonly IMapper _mapper;
-    public CardsController(ICardService cardService, IMapper mapper)
+    public CardsController(ILogger<CardsController> logger, ICardService cardService, IMapper mapper)
     {
+        _logger = logger;
         _cardService = cardService;
         _mapper = mapper;
     }
@@ -42,7 +44,7 @@ public class CardsController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e.ToString());
             return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
         }
     }
@@ -62,7 +64,7 @@ public class CardsController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e.ToString());
             return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
         }
     }
@@ -87,7 +89,7 @@ public class CardsController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e.ToString());
             return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
         }
     }
@@ -114,13 +116,12 @@ public class CardsController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e.ToString());
             return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
         }
     }
 
-    [HttpDelete("{id}")]
-    [HttpPost(Name = "Delete Card")]
+    [HttpDelete("{id}", Name = "Delete Card")]
     [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CardDTO))]
@@ -135,7 +136,7 @@ public class CardsController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e.ToString());
             return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
         }
     }
@@ -158,7 +159,7 @@ public class CardsController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e.ToString());
             return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Server Error"));
         }
     }

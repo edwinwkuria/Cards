@@ -35,7 +35,7 @@ public class CardService : ICardService
         
         var cards = _repository.Get(
                 filter: c => (canViewAllCards || c.CreatedBy.Equals(user.Id)), 
-                orderBy: GetCardOrderBy("createdon", "desc"))
+                orderBy: GetCardOrderBy(model.SortBy, model.SortOrder))
             .Skip(model.Offset).Take(model.Limit).Select(x => _mapper.Map<CardDTO>(x)).ToList();
         
         return (HttpStatusCode.OK, "Success", cards);
