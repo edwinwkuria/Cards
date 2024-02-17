@@ -10,5 +10,6 @@ public interface ICardService
     CardDTO CreateCard(Card card);
     CardDTO UpdateCard(Card card);
     bool DeleteCard(Guid id);
+    List<CardDTO> SearchCard(SearchDTO model);
 
 }

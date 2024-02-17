@@ -33,7 +33,7 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
         context.Update(entity);
     }
 
-    public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
+    public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
     {
         IQueryable<TEntity> query = dbSet;
 
@@ -42,9 +42,6 @@ public class EntityRepository <TEntity> : IRepository<TEntity> where TEntity : B
 
         if (orderBy != null)
             query = orderBy(query);
-
-        foreach (var include in includes)
-            query = query.Include(include);
 
         return query;
     }

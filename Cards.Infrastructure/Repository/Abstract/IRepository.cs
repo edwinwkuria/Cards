@@ -16,8 +16,7 @@ public interface IRepository<TEntity> : IDisposable where TEntity : BaseModel
     /// <returns></returns>
     IQueryable<TEntity> Get(
         Expression<Func<TEntity, bool>> filter = null,
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        params Expression<Func<TEntity, object>>[] includes);
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
 
     /// <summary>
     /// Get single entity by primary key

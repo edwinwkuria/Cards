@@ -10,25 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aa14bd4-f607-4226-a55e-121db273b1f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Cards.API/BindingModels/CardsController/EditCardBindingModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cards.API/BindingModels/Validation/ColorFormatAttribute.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cards.Infrastructure/CryptoGraphy/PasswordHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cards.API/Services/DTOModels/SearchDTO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Cards/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Cards/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/AutoMapping/AutoMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/AutoMapping/AutoMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/BindingModels/CardsController/CardBindingModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/BindingModels/CardsController/CardBindingModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/BindingModels/UsersController/LoginBindingModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/BindingModels/UsersController/LoginBindingModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.API/ConfigModels/MethodPermissionsConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/ConfigModels/MethodPermissionsConfig.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.API/Controllers/CardsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Controllers/CardsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Controllers/UsersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cards.API/Services/CardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/CardService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/DTOModels/CardDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/DTOModels/CardDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/DTOModels/UserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/DTOModels/UserDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.API/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Context/EntityConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Context/EntityConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Entities/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Migrations/20240216053739_InitialMigration.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Migrations/20240216053739_InitialMigration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Migrations/DatabaseContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Seeder/UserSeeder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Seeder/UserSeeder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.API/Services/Interfaces/ICardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/Services/Interfaces/ICardService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.API/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Repository/Abstract/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Repository/Abstract/IRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cards.Infrastructure/Repository/EntityRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Cards.Infrastructure/Repository/EntityRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +124,7 @@
       <updated>1707977988504</updated>
       <workItem from="1707977991882" duration="12724000" />
       <workItem from="1708060252579" duration="32078000" />
+      <workItem from="1708142004368" duration="5685000" />
     </task>
     <servers />
   </component>

@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using Cards.API.ConfigModels;
 using Cards.Infrastructure.DataTypes;
 using Cards.Infrastructure.Entities;
 using Cards.Infrastructure.Repository.Abstract;
 using Cards.Services.DTOModels;
 using Cards.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace Cards.Services;
@@ -83,6 +85,18 @@ public class CardService : ICardService
         _iuow.SaveChanges();
         return true;    }
 
+    public List<CardDTO> SearchCard(SearchDTO model)
+    {
+        var userPermission = GetUserMethodPermission(user.Role, MethodPermissionsConfig.SearchCard) + "_all";
+        var can_access_all = "search_cards_all".Equals(userPermission, StringComparison.OrdinalIgnoreCase);
+        var cards = _repository.Get(
+                filter: GetFilterExpression(model), orderBy: GetOrderBy(model))
+            .Where(c => can_access_all || c.CreatedBy.Equals(user.Id))
+            .Skip(model.Offset).Take(model.Limit).Select(x => _mapper.Map<CardDTO>(x)).ToList();
+
+        return cards;
+    }
+
     private string? GetUserMethodPermission(UserRoles? userRoles, string method)
     {
         var roles = userRoles switch
@@ -93,7 +107,7 @@ public class CardService : ICardService
         };
         return roles.Length < 1 ? String.Empty : roles.FirstOrDefault(x => x.StartsWith(method));
     }
-
+    
     private bool CanPerformAction(string methodPermission,Card card)
     {
         var permission = GetUserMethodPermission(user.Role, methodPermission);
@@ -104,5 +118,29 @@ public class CardService : ICardService
             return true;
 
         return false;
+    }
+    
+    private Expression<Func<Card, bool>> GetFilterExpression(SearchDTO card)
+    {
+        return c =>
+            (string.IsNullOrEmpty(card.Name) || c.Name.Contains(card.Name)) &&
+            (string.IsNullOrEmpty(card.Colour) || c.Colour == card.Colour) &&
+            (string.IsNullOrEmpty(card.Status) || c.Status.ToString() == card.Status) &&
+            (!card.CreatedDate.HasValue || c.CreatedOn.Date == card.CreatedDate.Value.Date);
+    }
+    
+    private Func<IQueryable<Card>, IOrderedQueryable<Card>> GetOrderBy(SearchDTO card)
+    {
+        switch (card.SortBy.ToLower())
+        {
+            case "color":
+                return card.SortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.Colour) : q => q.OrderByDescending(c => c.Colour);
+            case "status":
+                return card.SortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.Status) : q => q.OrderByDescending(c => c.Status);
+            case "createddate":
+                return card.SortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.CreatedOn) : q => q.OrderByDescending(c => c.CreatedOn);
+            default:
+                return card.SortOrder.ToLower() == "asc" ? q => q.OrderBy(c => c.Name) : q => q.OrderByDescending(c => c.Name);
+        }
     }
 }

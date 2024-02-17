@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cards.BindingModels.CardsController;
 using Cards.Infrastructure.Entities;
+using Cards.Services.DTOModels;
 using Cards.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -68,6 +69,24 @@ public class CardsController : ControllerBase
     {
         var response = _cardService.DeleteCard(id);
         
+        return Ok(response);
+    }
+    
+    [HttpGet("search")]
+    public ActionResult<List<CardDTO>> SearchCard(string name = null,
+        string color = null,
+        string status = null,
+        DateTime? createdDate = null,
+        int page = 1,
+        int size = 10,
+        int offset = 0,
+        int limit = 10,
+        string sortBy = "name",
+        string sortOrder = "asc")
+    {
+        var model = new SearchDTO(name, color, status, createdDate, page, size, offset, limit, sortBy, sortOrder);
+
+        var response = _cardService.SearchCard(model);
         return Ok(response);
     }
     
